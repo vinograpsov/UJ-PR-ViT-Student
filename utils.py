@@ -4,6 +4,7 @@ import torch.nn as nn
 from torchsummary import summary
 import model_vit
 import resnet
+import vit 
 
 def interpolate_pos_embed(model, checkpoint_model):
     if 'pos_embed' in checkpoint_model:
@@ -48,8 +49,13 @@ def create_teacher():
     return model_teacher
 
 
-def create_student():
+def create_student_res():
     model_student = resnet.ResNet(input_shape=[1, 3, 90, 90], depth=26, base_channels=6)  ## ~ 160k parameters
     # summary(model_student, (3, 90, 90))
 
+    return model_student
+
+
+def create_student():
+    model_student = vit.VisionTransformer(image_size=90, patch_size=16, num_classes=196)
     return model_student
