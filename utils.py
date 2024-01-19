@@ -57,5 +57,5 @@ def create_student_res():
 
 
 def create_student():
-    model_student = vit.VisionTransformer(image_size=90, patch_size=16, num_classes=196)
+    model_student = vit.VisionTransformer(image_size=224, patch_size=16, num_classes=196)
     return model_student

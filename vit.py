@@ -34,7 +34,7 @@ class TransformerEncoder(nn.Module):
     
 
 class VisionTransformer(nn.Module):
-    def __init__(self,  image_size=90, patch_size=16, num_classes=196):
+    def __init__(self,  image_size=224, patch_size=16, num_classes=196):
         super().__init__()
         h, w = image_size if isinstance(image_size, tuple) else (image_size, image_size)
         emb_size = patch_size * patch_size * 3  
