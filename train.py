@@ -19,6 +19,11 @@ import imagenet
 import newmodel
 from utils import create_teacher, create_student
 
+import os
+if not os.path.exists('deitbase_max'):
+    os.makedirs('deitbase_max')
+
+
 
 if __name__ == '__main__':
     if torch.cuda.is_available():
