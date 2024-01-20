@@ -30,22 +30,17 @@ def interpolate_pos_embed(model, checkpoint_model):
             checkpoint_model['pos_embed'] = new_pos_embed
 
 def create_teacher():
-    model_teacher = model_vit.__dict__['vit_base_patch16'](
-        num_classes=1000,
-        drop_path_rate=0,
-        global_pool=True,
-    )
 
-    checkpoint = torch.load('mae_finetuned_vit_base.pth', map_location='cpu')
-    msg = model_teacher.load_state_dict(checkpoint['model'], strict = False)
-    print(msg)
-    model_teacher.eval()
+    model_teacher = torch.hub.load('facebookresearch/deit:main', 'deit_tiny_patch16_224', pretrained=True)
+
+    summary(model_teacher, (3, 224,224))
 
     for param in model_teacher.parameters():
         param.requires_grad = False
 
     for block in model_teacher.blocks:
         block.attn.fused_attn = False
+
     return model_teacher
 
 

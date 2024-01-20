@@ -13,9 +13,11 @@ class PatchEmbedding(nn.Module):
         
 
     def forward(self, x):
+        print("Before PatchEmbedding:", x.shape)  
         x = self.projection(x)  
         x = x.flatten(2)      
-        x = x.transpose(1, 2)   
+        x = x.transpose(1, 2)
+        print("After PatchEmbedding:", x.shape) 
         return x
     
 class TransformerEncoder(nn.Module):
@@ -43,6 +45,9 @@ class VisionTransformer(nn.Module):
         num_patches = (h // patch_size) * (w // patch_size)
         self.cls_token = nn.Parameter(torch.zeros(1, 1, emb_size))
         self.positional_embedding = nn.Parameter(torch.randn(1, num_patches + 1, emb_size))
+        
+        print("Positional Embedding Shape:", self.positional_embedding.shape)
+
         self.transformer_encoder = TransformerEncoder(emb_size=emb_size)
         self.mlp_head = nn.Sequential(
             nn.LayerNorm(emb_size),
